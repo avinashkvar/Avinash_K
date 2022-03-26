@@ -23,9 +23,15 @@ const register = async (req, res) => {
 	}
 };
 
-const login = (req, res) => {
+const login = async (req, res) => {
 	try {
-		return res.status(201).send('login');
+		const user = await User.findOne({email:req.body.email})
+
+        if(!user){
+            return res.status(400).send('incorrect email or password')
+        }
+
+        return res.status(200).send('login successful')
 	} catch (error) {
 		return res.status(500).send({ error: error.message });
 	}
