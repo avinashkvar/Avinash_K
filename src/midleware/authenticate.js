@@ -18,7 +18,9 @@ const authenticate = async (req, res, next) => {
 	} catch (error) {
 		return res.status(500).send('Authorization token not found');
 	}
-    
+	console.log('bellow')
+    console.log(decoded)
+
     req.user=decoded.user
 
     return next()
