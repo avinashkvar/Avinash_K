@@ -6,6 +6,8 @@ const userController = require('./controllers/user.controller');
 
 const { register, login } = require('./controllers/auth.controller');
 
+const productController = require('./controllers/product.controller');
+
 app.use(express.json());
 
 app.use('/users', userController);
@@ -13,5 +15,7 @@ app.use('/users', userController);
 app.post('/register', register);
 
 app.post('/login', login);
+
+app.use('/product', productController);
 
 module.exports = app;
