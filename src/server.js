@@ -8,5 +8,5 @@ app.listen(5000, async () => {
 	} catch (error) {
 		console.log(error);
 	}
-	console.log('listening on 5000');
+	console.log('listening on the port 5000');
 });
