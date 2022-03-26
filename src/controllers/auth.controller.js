@@ -2,8 +2,10 @@ const User = require('../models/user.model');
 
 var jwt = require('jsonwebtoken');
 
+require('dotenv').config();
+
 const newToken = (user) => {
-	 return jwt.sign({ user }, 'masai');
+	return jwt.sign({ user }, process.env.key);
 };
 
 const register = async (req, res) => {
@@ -25,13 +27,19 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
 	try {
-		const user = await User.findOne({email:req.body.email})
+		const user = await User.findOne({ email: req.body.email });
 
-        if(!user){
-            return res.status(400).send('incorrect email or password')
-        }
+		if (!user) {
+			return res.status(400).send('incorrect email or password');
+		}
 
-        return res.status(200).send('login successful')
+		const match = user.checkPassword(req.body.password);
+
+		if (!match) {
+			return res.status(400).send('incorrect email or password');
+		}
+
+		return res.status(200).send('login successfull');
 	} catch (error) {
 		return res.status(500).send({ error: error.message });
 	}
